@@ -1,0 +1,53 @@
+﻿@model IEnumerable<NewsEntities.Entities.News>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>ADD NEWS PANEL</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NewsName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NewsTitle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NewsContent)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NewsExpo)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NewsName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NewsTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NewsContent)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NewsExpo)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.NewsId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.NewsId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.NewsId">Delete</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
