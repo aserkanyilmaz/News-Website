@@ -11,6 +11,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using MongoDbLibrary.DataAccess;
+using MongoDbLibrary.DataAccess.EntityFramework;
 using NewsBusiness.Concrete;
 using NewsCore.Abstract;
 using NewsDataRepository.Concrete.EntityFramework;
@@ -42,7 +44,12 @@ namespace NewsPanel
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-           // services.AddTransient<News>();
+            services.AddScoped(typeof(IBaseMongoRepository<>), typeof(BaseMongoRepository<>));
+            services.AddScoped<INewsRepository, NewsGatewayRepository>();
+
+            string mongoConnectionString = this.Configuration.GetConnectionString("MongoConnectionString");
+
+            // services.AddTransient<News>();
             services.AddScoped<INewsService, NewsService>();
            // services.AddScoped<INewsRepository, NewsRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();

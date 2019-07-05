@@ -37,8 +37,8 @@ namespace NewsBusiness.Concrete
 
         public News GetById(int newsId)
         {
-            throw new NotImplementedException();
-            // return _newsRepository.Get(p => p.NewsId == newsId);
+            //throw new NotImplementedException();
+            return _newsRepository.Get(p => p.NewsId == newsId);
         }
 
         public void Update(News news)

@@ -10,22 +10,44 @@ namespace News7.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class NewsController:ControllerBase
-    {  
+    public class NewsController : ControllerBase
+    {
         private INewsService _newsService;
-        private  readonly INewsRepository _newsGatewayRepository;
+        private readonly INewsRepository _newsGatewayRepository;
         public NewsController(INewsService newsService, INewsRepository newsGatewayRepository)
         {
             _newsService = newsService;
             _newsGatewayRepository = newsGatewayRepository;
         }
 
-        [HttpPost("test/mongo")]
+        [HttpPost("add/mongo")]
         public IActionResult GetTestMongAdd([FromBody] News entity)
         {
             _newsGatewayRepository.Add(entity);
 
             return Ok("DONE");
+        }
+
+        [HttpGet("get/mongo")]
+        public IActionResult GetTestMongo([FromBody] News entity)
+            {
+            _newsGatewayRepository.GetList();
+            return Ok("Getting");
+            }
+        [HttpGet("delete/mongo/{id}")]
+        public IActionResult GetTestMongoDel([FromBody] News entity)
+        {
+            _newsGatewayRepository.Delete(entity);
+            return Ok("Deleted");
+        }
+
+        [HttpPost("edit/mongo/{id}")]
+        public IActionResult UpdateMongo( int id, [FromBody] News entity )
+        {
+            if (id != entity.NewsId)
+                return BadRequest();
+            _newsGatewayRepository.Update(entity);
+            return Ok("Updated;");                      
         }
 
         [HttpGet("GetNews")]
